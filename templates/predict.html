@@ -20,21 +20,26 @@
         <label for="time">Time (hrs):</label>
         <input type="number" id="time" name="time" required min="1">
         
-        <button type="submit">Submit</button>
+        <button type="submit">Predict</button>
     </form>
 
+    <div id="output"></div>
     
-    {% if prediction %}
-        <h3>Prediction Results:</h3>
-        <table border="1">
-            {% for key, value in prediction.items() %}
-                <tr>
-                    <td><strong>{{ key }}</strong></td>
-                    <td>{{ value }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
+    <script>
+        document.getElementById("prediction-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
 
+            const formData = new FormData(this);
+            const response = await fetch("/predict", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+            document.getElementById("output").innerHTML = data.prediction !== null ? 
+                `Predicted Value: ${data.prediction}` : `Error: ${data.error}`;
+        });
+    </script>
+    
 </body>
 </html>

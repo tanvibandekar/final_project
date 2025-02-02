@@ -79,3 +79,10 @@ button:hover {
 .output li {
     margin-bottom: 5px;
 }
+
+#output {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+}
